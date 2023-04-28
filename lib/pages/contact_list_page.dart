@@ -32,6 +32,20 @@ class _ContactListPageState extends State<ContactListPage> {
             final contact = provider.contactList[index];
             return Dismissible(
               key: UniqueKey(),
+              direction: DismissDirection.endToStart,
+              background: Container(
+                alignment: Alignment.centerRight,
+                color: Colors.red,
+                child: const Icon(
+                  Icons.delete,
+                  size: 35,
+                  color: Colors.white,
+                ),
+              ),
+              confirmDismiss: showConfirmationDialog,
+              onDismissed: (direction) {
+                provider.deleteContact(contact);
+              },
               child: Card(
                 child: ListTile(
                   onTap: () {
@@ -67,5 +81,26 @@ class _ContactListPageState extends State<ContactListPage> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future<bool?> showConfirmationDialog(DismissDirection direction) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('DELETE'),
+              content: const Text('Sure to delete this item?'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: const Text('CANCEL')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                    child: const Text('YES'))
+              ],
+            ));
   }
 }
