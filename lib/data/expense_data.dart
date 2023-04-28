@@ -1,3 +1,4 @@
+import 'package:address_book_practice/datetime/date_time_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../models/expense_item.dart';
@@ -47,7 +48,7 @@ class ExpenseData {
   DateTime startOfWeekDate(){
     DateTime? startOfWeek;
 
-    //get todays date
+    //get today date
     DateTime today = DateTime.now();
 
     //go backwards from today to find sunday
@@ -61,7 +62,20 @@ class ExpenseData {
 
   Map<String, double>calculateDailyExpenseSummary(){
     Map<String, double>dailyExpenseSummary = {
-
+      //date(yyyymmdd) : amountTotalForDay
     };
+    for(var expense in overallExpenseList){
+      String date = convertDateTimeToString(expense.dateTime);
+      double amount = double.parse(expense.amount);
+
+      if(dailyExpenseSummary.containsKey(date)){
+        double currentAmount = dailyExpenseSummary[date]!;
+        currentAmount += amount;
+        dailyExpenseSummary[date] = currentAmount;
+      }else{
+        dailyExpenseSummary.addAll({date: amount});
+      }
+    }
+    return dailyExpenseSummary;
   }
 }
