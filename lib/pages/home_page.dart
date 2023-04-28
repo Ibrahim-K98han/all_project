@@ -1,4 +1,8 @@
+import 'package:address_book_practice/components/expense_tile.dart';
+import 'package:address_book_practice/data/expense_data.dart';
+import 'package:address_book_practice/models/expense_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -46,18 +50,58 @@ class _HomePageState extends State<HomePage> {
   }
 
   //save
-  void save(){}
+  void save() {
+    //create expense item
+    ExpenseItem newExpense = ExpenseItem(
+      name: newExpenseNameController.text,
+      amount: newExpenseAmountController.text,
+      dateTime: DateTime.now(),
+    );
+    //add the new expense
+    Provider.of<ExpenseData>(context, listen: false).addNewExpense(newExpense);
+    Navigator.pop(context);
+    clear();
+  }
 
   //cancel
-  void cancel(){}
+  void cancel() {
+    Navigator.pop(context);
+    clear();
+  }
+
+  //clear controller
+  void clear() {
+    newExpenseNameController.clear();
+    newExpenseAmountController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      floatingActionButton: FloatingActionButton(
-        onPressed: addNewExpense,
-        child: Icon(Icons.add),
-      ),
-    );
+    return Consumer<ExpenseData>(builder: (context, value, child) {
+      return Scaffold(
+          backgroundColor: Colors.grey[300],
+          floatingActionButton: FloatingActionButton(
+            onPressed: addNewExpense,
+            child: Icon(Icons.add),
+          ),
+          body: ListView(
+            children: [
+              //weekly summary
+
+              //expense list
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: value.getAllExpenseList().length,
+                itemBuilder: (context, index) {
+                  return ExpenseTile(
+                      name: value.getAllExpenseList()[index].name,
+                      amount: value.getAllExpenseList()[index].amount,
+                      dateTime: value.getAllExpenseList()[index].dateTime);
+                },
+              ),
+            ],
+          ));
+    });
   }
 }

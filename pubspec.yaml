@@ -41,6 +41,7 @@ dependencies:
   provider:
   url_launcher:
   animations:
+  fl_chart:
 
 
 dev_dependencies:

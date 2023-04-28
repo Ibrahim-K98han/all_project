@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/expense_item.dart';
 
-class ExpenseData {
+class ExpenseData extends ChangeNotifier{
   //list of all expense
   List<ExpenseItem> overallExpenseList = [];
 
@@ -15,11 +15,13 @@ class ExpenseData {
   //add new expense
   void addNewExpense(ExpenseItem newExpanse) {
     overallExpenseList.add(newExpanse);
+    notifyListeners();
   }
 
   //delete expense
   void deleteExpense(ExpenseItem expanse) {
     overallExpenseList.remove(expanse);
+    notifyListeners();
   }
 
   //get weekday (mon, tues, etc) from a dateTime object
