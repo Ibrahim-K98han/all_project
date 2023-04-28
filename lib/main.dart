@@ -1,3 +1,4 @@
+import 'package:address_book_practice/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class _ContactAppsState extends State<ContactApps> {
       theme: ThemeData(
         primarySwatch: Colors.blue
       ),
+      home: HomePage(),
     );
   }
 }
