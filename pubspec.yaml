@@ -42,6 +42,8 @@ dependencies:
   url_launcher:
   animations:
   fl_chart:
+  hive:
+  hive_flutter:
 
 
 dev_dependencies:

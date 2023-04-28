@@ -1,3 +1,4 @@
+import 'package:address_book_practice/components/expense_summary.dart';
 import 'package:address_book_practice/components/expense_tile.dart';
 import 'package:address_book_practice/data/expense_data.dart';
 import 'package:address_book_practice/models/expense_item.dart';
@@ -14,7 +15,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //text controllers
   final newExpenseNameController = TextEditingController();
-  final newExpenseAmountController = TextEditingController();
+  final newExpenseDollarController = TextEditingController();
+  final newExpenseCentsController = TextEditingController();
 
   //add new expense
   void addNewExpense() {
@@ -28,11 +30,34 @@ class _HomePageState extends State<HomePage> {
                   //expense name
                   TextField(
                     controller: newExpenseNameController,
+                    decoration: InputDecoration(
+                      hintText: 'Expense Name'
+                    ),
                   ),
+                  Row(
+                    children: [
+                      //dollers
+                      Expanded(
+                        child: TextField(
+                          controller: newExpenseDollarController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              hintText: 'Dollars'
+                          ),
+                        ),
+                      ),
 
-                  //expense amount
-                  TextField(
-                    controller: newExpenseAmountController,
+                      //cents
+                      Expanded(
+                        child: TextField(
+                          controller: newExpenseCentsController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              hintText: 'Cents'
+                          ),
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
@@ -51,10 +76,12 @@ class _HomePageState extends State<HomePage> {
 
   //save
   void save() {
+    //put dollars and cents together
+    String amount = '${newExpenseDollarController.text}.${newExpenseCentsController.text}';
     //create expense item
     ExpenseItem newExpense = ExpenseItem(
       name: newExpenseNameController.text,
-      amount: newExpenseAmountController.text,
+      amount: amount,
       dateTime: DateTime.now(),
     );
     //add the new expense
@@ -72,7 +99,8 @@ class _HomePageState extends State<HomePage> {
   //clear controller
   void clear() {
     newExpenseNameController.clear();
-    newExpenseAmountController.clear();
+    newExpenseDollarController.clear();
+    newExpenseCentsController.clear();
   }
 
   @override
@@ -82,12 +110,14 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.grey[300],
           floatingActionButton: FloatingActionButton(
             onPressed: addNewExpense,
+            backgroundColor: Colors.black,
             child: Icon(Icons.add),
           ),
           body: ListView(
             children: [
               //weekly summary
-
+              ExpenseSummary(startOfWeek: value.startOfWeekDate()),
+              SizedBox(height: 20,),
               //expense list
               ListView.builder(
                 shrinkWrap: true,
@@ -101,7 +131,8 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ],
-          ));
+          )
+      );
     });
   }
 }
