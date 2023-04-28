@@ -16,6 +16,7 @@ class _ContactAppsState extends State<ContactApps> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Address book',
       theme: ThemeData(
         primarySwatch: Colors.blue
       ),
