@@ -80,6 +80,11 @@ class _HomePageState extends State<HomePage> {
             ));
   }
 
+  //delete expense
+  void deleteExpense(ExpenseItem expense){
+
+  }
+
   //save
   void save() {
     //put dollars and cents together
