@@ -1,3 +1,4 @@
+import 'package:address_book_practice/model/contact_model.dart';
 import 'package:flutter/material.dart';
 
 import '../custom_widgets/text_input_field.dart';
@@ -58,7 +59,7 @@ class _NewContactPageState extends State<NewContactPage> {
                   return null;
                 }),
             textInputField(
-                nameController: nameController,
+                nameController: numberController,
                 labelText: 'Number',
                 icon: Icon(Icons.call),
                 validator: (value) {
@@ -68,7 +69,7 @@ class _NewContactPageState extends State<NewContactPage> {
                   return null;
                 }),
             textInputField(
-                nameController: nameController,
+                nameController: emailController,
                 labelText: 'Email',
                 icon: Icon(Icons.email),
                 validator: (value) {
@@ -78,7 +79,7 @@ class _NewContactPageState extends State<NewContactPage> {
                   return null;
                 }),
             textInputField(
-                nameController: nameController,
+                nameController: addressController,
                 labelText: 'Address',
                 icon: Icon(Icons.location_on),
                 validator: (value) {
@@ -88,7 +89,7 @@ class _NewContactPageState extends State<NewContactPage> {
                   return null;
                 }),
             textInputField(
-                nameController: nameController,
+                nameController: companyController,
                 labelText: 'Company',
                 icon: Icon(Icons.home),
                 validator: (value) {
@@ -98,7 +99,7 @@ class _NewContactPageState extends State<NewContactPage> {
                   return null;
                 }),
             textInputField(
-                nameController: nameController,
+                nameController: designationController,
                 labelText: 'Designation',
                 icon: Icon(Icons.home_repair_service),
                 validator: (value) {
@@ -108,7 +109,7 @@ class _NewContactPageState extends State<NewContactPage> {
                   return null;
                 }),
             textInputField(
-                nameController: nameController,
+                nameController: websiteController,
                 labelText: 'Website',
                 icon: Icon(Icons.web),
                 validator: (value) {
@@ -123,5 +124,17 @@ class _NewContactPageState extends State<NewContactPage> {
     );
   }
 
-  void _saveContact() {}
+  void _saveContact() {
+    if (form_key.currentState!.validate()) {
+      final contact = ContactModel(
+          name: nameController.text,
+          number: numberController.text,
+          email: emailController.text,
+          address: addressController.text,
+          company: companyController.text,
+          designation: designationController.text,
+          website: websiteController.text
+      );
+    }
+  }
 }
